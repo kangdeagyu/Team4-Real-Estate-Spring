@@ -89,4 +89,31 @@ public class subwayController {
         return "getDistance";
     }
 
+    @RequestMapping("/getXY")
+    public String getXY(Model model) throws Exception {
+        String csvFile = "static/csv/road.csv";
+        String line;
+        
+        List<String> addressList = new ArrayList<>();
+
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(csvFile);
+                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            int i = 0;
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                if (i == 0) {
+                    i++;
+                    continue;
+                }
+                addressList.add(i - 1, data[0]);
+                i++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        model.addAttribute("list", addressList);
+        return "getXY";
+    }
+
 }

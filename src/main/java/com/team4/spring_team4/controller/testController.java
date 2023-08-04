@@ -20,7 +20,7 @@ public class testController{
     testDaoService service;
 
     //@ResponseBody -> 페이지로 데이터를 뿌려서 넘기는 방식이 아닌 JSON Data를 바로 넘겨줄 수 있다.
-    @RequestMapping("/getXY")
+    @RequestMapping("/get")
     public String listQuery(Model model) throws Exception{
         List<testDto> listDao = service.listDao();
 
