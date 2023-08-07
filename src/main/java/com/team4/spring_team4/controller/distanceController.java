@@ -52,26 +52,26 @@ public class distanceController {
                 String[] data = line.split(" ");
                 for (int j = 0; j < data.length; j++) {
                     if (j == 0) {
-                        road.setCity(data[j]);
+                        road.setCity(data[j].replace("\"", ""));
                     } else if (j == 1) {
                         road.setGu(data[j]);
                     } else if (j == 2) {
-                        road.setRoadName(data[j] + " " + data[j+1]);
+                        road.setRoadName(data[j].replace("\"", "") + " " + data[j+1].replace("\"", ""));
                         j++;
                     } else {
                         if (road.getAptName() != null) {
-                            road.setAptName(road.getAptName() + " " + data[j]);
+                            road.setAptName(road.getAptName() + " " + data[j].replace("\"", ""));
                         } else {
-                            road.setAptName(data[j]);
+                            road.setAptName(data[j].replace("\"", ""));
                         }
                     }
                 }
                 
                 roadList.add(road);
-                System.out.println("City: " + road.getCity());
-                System.out.println("Gu: " + road.getGu());
-                System.out.println("RoadName: " + road.getRoadName());
-                System.out.println("AptName: " + road.getAptName());
+                // System.out.println("City: " + road.getCity());
+                // System.out.println("Gu: " + road.getGu());
+                // System.out.println("RoadName: " + road.getRoadName());
+                // System.out.println("AptName: " + road.getAptName());
                 
                 i++;
             }
@@ -79,6 +79,7 @@ public class distanceController {
             e.printStackTrace();
         }
         System.out.println(roadList.size());
+        List<String> road_address_name = new ArrayList<String>();
 
         try {
             String API_KEY = "ef894ee905a0643b7844daf7341d7569";
@@ -97,11 +98,12 @@ public class distanceController {
                 
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Authorization", "KakaoAK " + API_KEY);
-                conn.setRequestProperty("Accept-Charset", "UTF-8");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 
                 int responseCode = conn.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    BufferedReader brd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    BufferedReader brd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
                     String lines;
                     StringBuilder response = new StringBuilder();
 
@@ -130,6 +132,15 @@ public class distanceController {
                                 xandy.setX(Double.parseDouble(x));
                                 xandy.setY(Double.parseDouble(y));
                                 xyList.add(xandy);
+
+                                // "road_address" 안에 있는 "address_name" 값 가져오기
+                                if (document.containsKey("road_address")) {
+                                    Map<String, Object> roadAddress = (Map<String, Object>) document.get("road_address");
+                                    if (roadAddress.containsKey("address_name")) {
+                                        String nRoad_name = roadAddress.get("address_name").toString();
+                                        road_address_name.add(nRoad_name);
+                                    }
+                                }
                             }
                         }
                     }
@@ -153,6 +164,11 @@ public class distanceController {
 
         // FileWriter 객체 생성
         FileWriter writer = new FileWriter(filePath);
+
+        // Header 추가
+        String headerCsv = "도로명, 지번, 호선, 역이름, x, y, 거리";
+        writer.write(headerCsv);
+        writer.write("\n");
 
         for (int i = 0; i < xyList.size(); i++) {
             // System.out.println(xyList.get(i).getX());
@@ -179,14 +195,14 @@ public class distanceController {
                 }
             }
 
-            System.out.println(address + ',' + lines + ',' + stationName + ',' + -(shortestDistance * 1000));
+            // System.out.println(road_address_name.get(i).toString() + "," + address + ',' + lines + ',' + stationName + ',' + -(shortestDistance * 1000));
             // 파일 경로 및 이름 설정
             
-            System.out.println(filePath);
+            // System.out.println(filePath);
 
             try {
                 // CSV 형식으로 데이터를 문자열로 만듦
-                String csvData = address + "," + lines + "," + stationName + "," + -(shortestDistance * 1000);
+                String csvData = road_address_name.get(i).toString() + "," + address + "," + lines + "," + stationName + "," + xyList.get(i).getX() + "," + xyList.get(i).getY() + "," + -(shortestDistance * 1000);
 
                 // 파일에 데이터 쓰기
                 writer.write(csvData);
