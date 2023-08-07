@@ -176,7 +176,8 @@ public class distanceController {
 
             System.out.println(address + ',' + lines + ',' + stationName + ',' + -(shortestDistance * 1000));
             // 파일 경로 및 이름 설정
-            String filePath = "static/csv/resultOutput.csv";
+            String filePath = "C:\\ethan\\spring_team4\\src\\main\\resources\\static\\csv/resultOutput.csv";
+            System.out.println(filePath);
 
             try {
                 // FileWriter 객체 생성
