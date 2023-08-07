@@ -37,7 +37,7 @@ public class distanceController {
     @RequestMapping("/road_name")
     public List<xy> getRoadName(Model model) throws Exception{
         // Read CSV
-        String csvFile = "static/csv/결과_도로명주소1.csv";
+        String csvFile = "static/csv/강남구_역삼동_도로명.csv";
         String line;
 
         List<xy> xyList = new ArrayList<>();
@@ -68,10 +68,10 @@ public class distanceController {
                 }
                 
                 roadList.add(road);
-                // System.out.println("City: " + road.getCity());
-                // System.out.println("Gu: " + road.getGu());
-                // System.out.println("RoadName: " + road.getRoadName());
-                // System.out.println("AptName: " + road.getAptName());
+                System.out.println("City: " + road.getCity());
+                System.out.println("Gu: " + road.getGu());
+                System.out.println("RoadName: " + road.getRoadName());
+                System.out.println("AptName: " + road.getAptName());
                 
                 i++;
             }
