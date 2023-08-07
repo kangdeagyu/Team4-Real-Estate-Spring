@@ -149,6 +149,11 @@ public class distanceController {
 
         List<subwayDto> subwayPoint = service.listDao();
 
+        String filePath = "C:\\ethan\\spring_team4\\src\\main\\resources\\static\\csv/resultOutput.csv";
+
+        // FileWriter 객체 생성
+        FileWriter writer = new FileWriter(filePath);
+
         for (int i = 0; i < xyList.size(); i++) {
             // System.out.println(xyList.get(i).getX());
 
@@ -176,13 +181,10 @@ public class distanceController {
 
             System.out.println(address + ',' + lines + ',' + stationName + ',' + -(shortestDistance * 1000));
             // 파일 경로 및 이름 설정
-            String filePath = "C:\\ethan\\spring_team4\\src\\main\\resources\\static\\csv/resultOutput.csv";
+            
             System.out.println(filePath);
 
             try {
-                // FileWriter 객체 생성
-                FileWriter writer = new FileWriter(filePath);
-
                 // CSV 형식으로 데이터를 문자열로 만듦
                 String csvData = address + "," + lines + "," + stationName + "," + -(shortestDistance * 1000);
 
@@ -190,17 +192,14 @@ public class distanceController {
                 writer.write(csvData);
                 writer.write("\n"); // 개행 문자 삽입 (데이터 라인 끝)
 
-                // 파일 닫기
-                writer.close();
-
-                System.out.println("CSV 파일이 성공적으로 생성되었습니다.");
-
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("CSV 파일 생성 중 오류가 발생했습니다.");
             }
-
         }
+        System.out.println("CSV 파일이 성공적으로 생성되었습니다.");
+        // 파일 닫기
+        writer.close();
 
         return xyList;
     }
