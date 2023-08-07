@@ -23,21 +23,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.team4.spring_team4.function.Haversine;
+import com.team4.spring_team4.model.busDto;
 import com.team4.spring_team4.model.roadNameDto;
-import com.team4.spring_team4.model.subwayDto;
 import com.team4.spring_team4.model.xy;
-import com.team4.spring_team4.service.subwayDaoService;
+import com.team4.spring_team4.service.busDaoService;
 
 @Controller
-public class distanceController {
+public class busController {
 
     @Autowired
-    subwayDaoService service;
     
-    @RequestMapping("/road_name")
+    busDaoService service;
+    
+    @RequestMapping("/countBus")
     public List<xy> getRoadName(Model model) throws Exception{
         // Read CSV
-        String csvFile = "static/csv/역삼동.csv";
+        String csvFile = "static/csv/강남구_역삼동_도로명.csv";
         String line;
 
         List<xy> xyList = new ArrayList<>();
@@ -68,10 +69,10 @@ public class distanceController {
                 }
                 
                 roadList.add(road);
-                System.out.println("City: " + road.getCity());
-                System.out.println("Gu: " + road.getGu());
-                System.out.println("RoadName: " + road.getRoadName());
-                System.out.println("AptName: " + road.getAptName());
+                // System.out.println("City: " + road.getCity());
+                // System.out.println("Gu: " + road.getGu());
+                // System.out.println("RoadName: " + road.getRoadName());
+                // System.out.println("AptName: " + road.getAptName());
                 
                 i++;
             }
@@ -158,38 +159,36 @@ public class distanceController {
             e.printStackTrace();
         }
 
-        List<subwayDto> subwayPoint = service.listDao();
+        List<busDto> busPoint = service.listDao();
 
-        String filePath = "C:\\ethan\\spring_team4\\src\\main\\resources\\static\\csv/resultOutput.csv";
+        String filePath = "C:\\ethan\\spring_team4\\src\\main\\resources\\static\\csv/busResultOutput.csv";
 
         // FileWriter 객체 생성
         FileWriter writer = new FileWriter(filePath);
 
-        // Header 추가
-        String headerCsv = "도로명, 지번, 호선, 역이름, x, y, 거리";
+        // Header 추가s
+        String headerCsv = "도로명, 지번, 정류장이름, x, y, count";
         writer.write(headerCsv);
         writer.write("\n");
 
         for (int i = 0; i < xyList.size(); i++) {
             // System.out.println(xyList.get(i).getX());
 
-            double shortestDistance = Double.MAX_VALUE; // 각 건물에 대한 최단 거리 초기화
-            String lines = "";
             String stationName = "";
             String address = "";
+            int count = 0; // 반경 300미터 안 버스정류장의 개수 초기화
             
-            for (int j = 0; j < subwayPoint.size(); j++) {
+            for (int j = 0; j < busPoint.size(); j++) {
                 double distance = Haversine.getDistance(
                         xyList.get(i).getX(),
                         xyList.get(i).getY(),
-                        subwayPoint.get(j).getX(),
-                        subwayPoint.get(j).getY()
+                        busPoint.get(j).getX(),
+                        busPoint.get(j).getY()
                     );
 
-                if (shortestDistance > distance) {
-                    shortestDistance = distance;
-                    lines = subwayPoint.get(j).getLine();
-                    stationName = subwayPoint.get(j).getName();
+                if (distance * 1000 <= 300) {
+                    count++;
+                    stationName = busPoint.get(j).getName();
                     address = xyList.get(i).getAddress();
                     //System.out.println(distance);
                 }
@@ -202,7 +201,7 @@ public class distanceController {
 
             try {
                 // CSV 형식으로 데이터를 문자열로 만듦
-                String csvData = road_address_name.get(i).toString() + "," + address + "," + lines + "," + stationName + "," + xyList.get(i).getX() + "," + xyList.get(i).getY() + "," + -(shortestDistance * 1000);
+                String csvData = road_address_name.get(i).toString() + "," + address + "," + stationName + "," + xyList.get(i).getX() + "," + xyList.get(i).getY() + "," + count;
 
                 // 파일에 데이터 쓰기
                 writer.write(csvData);
