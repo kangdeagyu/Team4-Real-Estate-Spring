@@ -83,7 +83,7 @@ public class ApiController {
 
         conn.disconnect();
 
-        jsonList.put("results", apartmentDataArray);
+        jsonList.put("results", apartmentDataArray); // JSONArray를 Object 형식으로 감싸기
         System.out.println(jsonList);
 
         return jsonList.toString();

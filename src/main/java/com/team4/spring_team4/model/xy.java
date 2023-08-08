@@ -1,16 +1,15 @@
 package com.team4.spring_team4.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
+
 public class XY {
-    String address;
     double x;
     double y;
+
 }

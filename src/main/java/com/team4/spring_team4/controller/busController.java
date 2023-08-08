@@ -1,12 +1,10 @@
 package com.team4.spring_team4.controller;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -36,7 +34,10 @@ public class BusController {
     BusDaoService service;
     
     @RequestMapping("/countBus")
-    public List<XY> getRoadName(Model model) throws Exception{
+    public List<XY> getCount(Model model) throws Exception{
+        /* 
+        * 주소 데이터를 csv로 읽어와 모든 데이터 좌표의 반경 300M 이내 버스정류장의 개수를 csv파일로 write하는 기능
+        */
         // Read CSV
         String csvFile = "static/csv/강남구_역삼동_도로명.csv";
         String line;
