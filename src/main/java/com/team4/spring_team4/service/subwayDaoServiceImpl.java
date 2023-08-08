@@ -5,17 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.team4.spring_team4.dao.subwayDao;
-import com.team4.spring_team4.model.subwayDto;
+import com.team4.spring_team4.dao.SubwayDao;
+import com.team4.spring_team4.model.SubwayDto;
 
 @Service
-public class subwayDaoServiceImpl implements subwayDaoService {
+public class SubwayDaoServiceImpl implements SubwayDaoService {
 
     @Autowired
-    subwayDao dao;
+    SubwayDao dao;
 
     @Override
-    public List<subwayDto> listDao() throws Exception {
+    public List<SubwayDto> listDao() throws Exception {
         // TODO Auto-generated method stub
         return dao.listDao();
     }

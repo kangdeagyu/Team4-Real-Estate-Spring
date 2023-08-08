@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.team4.spring_team4.model.subwayDto;
+import com.team4.spring_team4.model.SubwayDto;
 
-public class subwayDaoImpl implements subwayDao {
+public class SubwayDaoImpl implements SubwayDao {
 
     SqlSession sqlSession;
     public static String namespace = "com.team4.spring_team4.dao.subwayDao";
 
     @Override
-    public List<subwayDto> listDao() throws Exception {
+    public List<SubwayDto> listDao() throws Exception {
         return sqlSession.selectList(namespace + ".listDao");
     }
     

@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-public class apiController {
+public class ApiController {
 
     @RequestMapping("/getPrice")
-    public JSONArray getPrice(HttpServletRequest request) throws Exception {
+    public String getPrice(HttpServletRequest request) throws Exception {
 
         // // 지번 데이터 받아왔을 때 글자 제거 후 뒤에 지번만 검색해야 api 이용 가능하기 때문에 불필요한 부분 제거
         // //String address = request.getParameter("address");
@@ -37,6 +37,7 @@ public class apiController {
         }; // 2년치 년월 배열 생성
         int index = 0; // 배열 인덱스
         JSONArray apartmentDataArray = new JSONArray();
+        JSONObject jsonList = new JSONObject(); // object로 변환하기 위한 객체 생성
 
         StringBuilder urlBuilder = new StringBuilder(
                 "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent");
@@ -59,7 +60,7 @@ public class apiController {
         Element items = body.getChild("items");
         List<Element> item = items.getChildren("item");
 
-        for (int i = 0; i < 24; i++) { // 2년치 월별 검색 반복
+        for (int i = 0; i < date.length; i++) { // 2년치 월별 검색 반복
             JSONArray apartmentMonthlyDataArray = new JSONArray(); // 월별 데이터를 담을 배열
 
             for (Element element : item) {
@@ -82,9 +83,10 @@ public class apiController {
 
         conn.disconnect();
 
-        System.out.println(apartmentDataArray.toString());
+        jsonList.put("results", apartmentDataArray);
+        System.out.println(jsonList);
 
-        return apartmentDataArray;
+        return jsonList.toString();
     }
 
 }

@@ -5,17 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.team4.spring_team4.dao.testDao;
-import com.team4.spring_team4.model.testDto;
+import com.team4.spring_team4.dao.TestDao;
+import com.team4.spring_team4.model.TestDto;
 
 @Service
-public class testDaoServiceImpl implements testDaoService{
+public class TestDaoServiceImpl implements TestDaoService{
 
     @Autowired
-    testDao dao;
+    TestDao dao;
 
     @Override
-    public List<testDto> listDao() throws Exception {
+    public List<TestDto> listDao() throws Exception {
         // TODO Auto-generated method stub
         return dao.listDao();
     }

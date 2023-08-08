@@ -9,9 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.team4.spring_team4.function.Haversine;
-import com.team4.spring_team4.model.subwayDto;
-import com.team4.spring_team4.model.xy;
-import com.team4.spring_team4.service.subwayDaoService;
+import com.team4.spring_team4.model.SubwayDto;
+import com.team4.spring_team4.model.XY;
+import com.team4.spring_team4.service.SubwayDaoService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,10 +19,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 @Controller
-public class subwayController {
+public class SubwayController {
 
     @Autowired
-    subwayDaoService service;
+    SubwayDaoService service;
 
     @RequestMapping("/subway")
     public String getDistance(Model model) throws Exception {
@@ -30,13 +30,13 @@ public class subwayController {
         String csvFile = "static/csv/개포동.csv";
         String line;
         
-        List<xy> xyList = new ArrayList<>();
+        List<XY> xyList = new ArrayList<>();
 
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(csvFile);
                 BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
             int i = 0;
             while ((line = br.readLine()) != null) {
-                xy xandy = new xy();
+                XY xandy = new XY();
                 String[] data = line.split(",");
                 if (i == 0) {
                     i++;
@@ -54,7 +54,7 @@ public class subwayController {
 
 
         // Model
-        List<subwayDto> subwayPoint = service.listDao();
+        List<SubwayDto> subwayPoint = service.listDao();
         // model.addAttribute("subway", listDao);
 
 

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class xy {
+public class XY {
     String address;
     double x;
     double y;

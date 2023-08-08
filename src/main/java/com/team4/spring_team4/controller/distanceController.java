@@ -23,32 +23,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.team4.spring_team4.function.Haversine;
-import com.team4.spring_team4.model.roadNameDto;
-import com.team4.spring_team4.model.subwayDto;
-import com.team4.spring_team4.model.xy;
-import com.team4.spring_team4.service.subwayDaoService;
+import com.team4.spring_team4.model.RoadNameDto;
+import com.team4.spring_team4.model.SubwayDto;
+import com.team4.spring_team4.model.XY;
+import com.team4.spring_team4.service.SubwayDaoService;
 
 @Controller
-public class distanceController {
+public class DistanceController {
 
     @Autowired
-    subwayDaoService service;
+    SubwayDaoService service;
     
     @RequestMapping("/road_name")
-    public List<xy> getRoadName(Model model) throws Exception{
+    public List<XY> getRoadName(Model model) throws Exception{
         // Read CSV
         String csvFile = "static/csv/역삼동.csv";
         String line;
 
-        List<xy> xyList = new ArrayList<>();
+        List<XY> xyList = new ArrayList<>();
 
-        List<roadNameDto> roadList = new ArrayList<>();
+        List<RoadNameDto> roadList = new ArrayList<>();
 
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(csvFile);
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
             int i = 0;
             while ((line = br.readLine()) != null) {
-                roadNameDto road = new roadNameDto();
+                RoadNameDto road = new RoadNameDto();
                 String[] data = line.split(" ");
                 for (int j = 0; j < data.length; j++) {
                     if (j == 0) {
@@ -86,7 +86,7 @@ public class distanceController {
             String apiUrl = "https://dapi.kakao.com/v2/local/search/address.json?query=";
 
             for(int i = 0; i < roadList.size(); i++){
-                xy xandy = new xy();
+                XY xandy = new XY();
 
                 // Thread.sleep(500);
                 String roadName = roadList.get(i).getRoadName();
@@ -158,7 +158,7 @@ public class distanceController {
             e.printStackTrace();
         }
 
-        List<subwayDto> subwayPoint = service.listDao();
+        List<SubwayDto> subwayPoint = service.listDao();
 
         String filePath = "C:\\ethan\\spring_team4\\src\\main\\resources\\static\\csv/resultOutput.csv";
 

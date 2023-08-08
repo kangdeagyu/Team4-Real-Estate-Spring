@@ -2,9 +2,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.team4.spring_team4.dao.testDao">
+<mapper namespace="com.team4.spring_team4.dao.TestDao">
 
-	<select id="listDao" resultType="com.team4.spring_team4.model.testDto">
+	<select id="listDao" resultType="com.team4.spring_team4.model.TestDto">
 		SELECT * FROM test
 	</select>
 

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class roadNameDto {
+public class RoadNameDto {
     String city;
     String gu;
     String roadName;
