@@ -18,7 +18,7 @@ public class UserController {
     UserDaoService service;
 
     @RequestMapping("/dupCheck")
-    public String getUserCount(HttpServletRequest request) throws Exception{
+    public String getDupCount(HttpServletRequest request) throws Exception{
 
         int count = 0;
         String userid = request.getParameter("userid");
@@ -26,6 +26,21 @@ public class UserController {
         JSONObject resultJSON = new JSONObject();
 
         resultJSON.put("result", count);
+
+        return resultJSON.toString();
+    }
+
+
+    @RequestMapping("/loginCheck")
+    public String getUserCount(HttpServletRequest request) throws Exception{
+
+        String userid = request.getParameter("userid");
+        String password = request.getParameter("password");
+        int count = service.loginCheck(userid, password);
+        JSONObject resultJSON = new JSONObject();
+
+        System.out.println("count : " + count);
+        resultJSON.put("result", (count == 0) ? "fail" : "success");
 
         return resultJSON.toString();
     }

@@ -15,5 +15,10 @@ public class UserDaoServiceImpl implements UserDaoService{
     public int dupCheck(String userid) throws Exception {
         return dao.dupCheck(userid);
     }
+        
+    @Override
+    public int loginCheck(String userid, String password) throws Exception {
+        return dao.loginCheck(userid, password);
+    }
     
 }

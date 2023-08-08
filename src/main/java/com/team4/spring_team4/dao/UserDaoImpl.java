@@ -9,8 +9,11 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public int dupCheck(String userid) throws Exception {
-        // TODO Auto-generated method stub
         return sqlSession.selectOne(namespace + ".dupCheck");
+    }
+
+    public int loginCheck(String userid, String password) throws Exception {
+        return sqlSession.selectOne(namespace + ".loginCheck");
     }
     
 

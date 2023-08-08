@@ -8,4 +8,8 @@
 		SELECT COUNT(*) FROM user WHERE userid = #{userid}
 	</select>
 
+	<select id="loginCheck" resultType="int">
+		SELECT COUNT(*) FROM user WHERE userid = #{userid} AND password = #{password}
+	</select>
+
 </mapper>
