@@ -5,7 +5,7 @@
 <mapper namespace="com.team4.spring_team4.dao.UserDao">
 
 	<select id="dupCheck" resultType="int">
-		SELECT COUNT(*) FROM user WHERE userid = ${userid}
+		SELECT COUNT(*) FROM user WHERE userid = #{userid}
 	</select>
 
 </mapper>

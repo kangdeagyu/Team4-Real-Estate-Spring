@@ -9,7 +9,7 @@ import com.team4.spring_team4.model.TestDto;
 public class TestDaoImpl implements TestDao{
 
     SqlSession sqlSession;
-    public static String namespace = "com.team4.spring_team4.dao.testDao";
+    public static String namespace = "com.team4.spring_team4.dao.TestDao";
 
     @Override
     public List<TestDto> listDao() throws Exception {

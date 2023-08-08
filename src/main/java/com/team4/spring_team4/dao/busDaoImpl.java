@@ -9,7 +9,7 @@ import com.team4.spring_team4.model.BusDto;
 public class BusDaoImpl implements BusDao {
     
     SqlSession sqlSession;
-    public static String namespace = "com.team4.spring_team4.dao.busDao";
+    public static String namespace = "com.team4.spring_team4.dao.BusDao";
 
     @Override
     public List<BusDto> listDao() throws Exception {
