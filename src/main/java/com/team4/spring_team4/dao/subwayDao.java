@@ -2,10 +2,10 @@ package com.team4.spring_team4.dao;
 
 import java.util.List;
 
-import com.team4.spring_team4.model.subwayDto;
+import com.team4.spring_team4.model.SubwayDto;
 
-public interface subwayDao {
+public interface SubwayDao {
 
-    public List<subwayDto> listDao() throws Exception;
+    public List<SubwayDto> listDao() throws Exception;
 
 }

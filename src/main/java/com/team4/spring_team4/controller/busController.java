@@ -1,12 +1,10 @@
 package com.team4.spring_team4.controller;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -23,33 +21,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.team4.spring_team4.function.Haversine;
-import com.team4.spring_team4.model.busDto;
-import com.team4.spring_team4.model.roadNameDto;
-import com.team4.spring_team4.model.xy;
-import com.team4.spring_team4.service.busDaoService;
+import com.team4.spring_team4.model.BusDto;
+import com.team4.spring_team4.model.RoadNameDto;
+import com.team4.spring_team4.model.XY;
+import com.team4.spring_team4.service.BusDaoService;
 
 @Controller
-public class busController {
+public class BusController {
 
     @Autowired
     
-    busDaoService service;
+    BusDaoService service;
     
     @RequestMapping("/countBus")
-    public List<xy> getRoadName(Model model) throws Exception{
+    public List<XY> getCount(Model model) throws Exception{
+        /* 
+        * 주소 데이터를 csv로 읽어와 모든 데이터 좌표의 반경 300M 이내 버스정류장의 개수를 csv파일로 write하는 기능
+        */
         // Read CSV
         String csvFile = "static/csv/강남구_역삼동_도로명.csv";
         String line;
 
-        List<xy> xyList = new ArrayList<>();
+        List<XY> xyList = new ArrayList<>();
 
-        List<roadNameDto> roadList = new ArrayList<>();
+        List<RoadNameDto> roadList = new ArrayList<>();
 
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(csvFile);
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
             int i = 0;
             while ((line = br.readLine()) != null) {
-                roadNameDto road = new roadNameDto();
+                RoadNameDto road = new RoadNameDto();
                 String[] data = line.split(" ");
                 for (int j = 0; j < data.length; j++) {
                     if (j == 0) {
@@ -87,7 +88,7 @@ public class busController {
             String apiUrl = "https://dapi.kakao.com/v2/local/search/address.json?query=";
 
             for(int i = 0; i < roadList.size(); i++){
-                xy xandy = new xy();
+                XY xandy = new XY();
 
                 // Thread.sleep(500);
                 String roadName = roadList.get(i).getRoadName();
@@ -159,7 +160,7 @@ public class busController {
             e.printStackTrace();
         }
 
-        List<busDto> busPoint = service.listDao();
+        List<BusDto> busPoint = service.listDao();
 
         String filePath = "C:\\ethan\\spring_team4\\src\\main\\resources\\static\\csv/busResultOutput.csv";
 

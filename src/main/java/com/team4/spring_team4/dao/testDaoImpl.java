@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.team4.spring_team4.model.testDto;
+import com.team4.spring_team4.model.TestDto;
 
-public class testDaoImpl implements testDao{
+public class TestDaoImpl implements TestDao{
 
     SqlSession sqlSession;
-    public static String namespace = "com.team4.spring_team4.dao.testDao";
+    public static String namespace = "com.team4.spring_team4.dao.TestDao";
 
     @Override
-    public List<testDto> listDao() throws Exception {
+    public List<TestDto> listDao() throws Exception {
         // TODO Auto-generated method stub
         return sqlSession.selectList(namespace + ".listDao");
     }

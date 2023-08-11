@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class testDto {
+public class TestDto {
 
     // Field
     int test1;

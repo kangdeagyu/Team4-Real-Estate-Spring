@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class subwayDto {
+public class SubwayDto {
     
     int id;
     String name;

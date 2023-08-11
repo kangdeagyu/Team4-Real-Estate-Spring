@@ -2,9 +2,9 @@ package com.team4.spring_team4.service;
 
 import java.util.List;
 
-import com.team4.spring_team4.model.testDto;
+import com.team4.spring_team4.model.TestDto;
 
-public interface testDaoService{
+public interface TestDaoService{
 
-    public List<testDto> listDao() throws Exception;
+    public List<TestDto> listDao() throws Exception;
 }

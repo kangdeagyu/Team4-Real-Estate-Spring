@@ -7,9 +7,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-
-public class XY {
-    double x;
-    double y;
+public class UserDto {
+    
+    String userid;
+    String password;
+    String address;
+    String phone;
+    int isdelete;
 
 }

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class busDto {
+public class BusDto {
     
     int node_id;
     int ars_id;
