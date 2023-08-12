@@ -28,13 +28,8 @@ public class OneSubwayController {
         타입 : get
         필수값
             xVal(Double), yVal(Double) : 경도, 위도
-        선택값
-            type(String) : {"distance", "station"} (default는 "distance")
-                distance : 가장 가까운 지하철역의 거리 반환
-                station  : 가장 가까운 지하철역의 역사명 반환
-
         
-        사용 예시 : "localhost:8080/ShortestStation?xVal=127.049878493722&yVal=37.4987776755024&type=station"
+        사용 예시 : "localhost:8080/ShortestStation?xVal=127.049878493722&yVal=37.4987776755024"
         */
 
         Double shortestDistance = Double.MAX_VALUE;
@@ -44,7 +39,7 @@ public class OneSubwayController {
         double yValue = Double.parseDouble(request.getParameter("yVal"));
         String type = request.getParameter("type");
 
-        String resultString = ""; // type에 따라 다른 값 리턴 위한 변수 선언
+        // String resultString = ""; // type에 따라 다른 값 리턴 위한 변수 선언
 
         List<SubwayDto> subwayList = service.listDao();
 
@@ -64,13 +59,14 @@ public class OneSubwayController {
             }
         }
 
-        resultString = (type == null || type.equals("distance")) // type값에 따라 다른 값 반환
-                    ? Double.toString(shortestDistance * -1000)
-                    : (type.equals("station")) ? stationName : "FAIL";
+        // resultString = (type == null || type.equals("distance")) // type값에 따라 다른 값 반환
+        //             ? Double.toString(shortestDistance * -1000)
+        //             : (type.equals("station")) ? stationName : "FAIL";
 
-        System.out.println(resultString);
+        // System.out.println(resultString);
 
-        resultJSON.put("result", resultString);
+        resultJSON.put("distance", shortestDistance * -1000);
+        resultJSON.put("station", stationName);
 
         return resultJSON.toString();
     }
