@@ -22,7 +22,7 @@ public class RServiceImpl implements RService{
             return predictionResult;
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error occurred during R computations.";
+            return "R Error";
         }
     }
 }
