@@ -1,6 +1,8 @@
 package com.team4.spring_team4.service;
 
 import org.rosuda.REngine.Rserve.RConnection;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -8,7 +10,11 @@ public class RServiceImpl implements RService{
     public String rPredict(double busStations, double distance, double leaseableArea, double floor, double yoc, double contractDate, double baseRate, double x, double y, String size) {
         try {
             RConnection conn = new RConnection();
-            String rdsPath = getClass().getResource("/rds/" + size + ".rds").getPath();
+            // String rdsPath = getClass().getResource("/rds/" + size + ".rds").getPath();
+
+            Resource rdsResource = new ClassPathResource("rds/" + size + ".rds");
+            String rdsPath = rdsResource.getFile().getAbsolutePath();
+            System.out.println(rdsPath);
 
             conn.voidEval("library(randomForest)");
             conn.voidEval("around10_rf <- readRDS('" + rdsPath +"')");
