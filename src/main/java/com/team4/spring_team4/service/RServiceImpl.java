@@ -8,9 +8,10 @@ public class RServiceImpl implements RService{
     public String rPredict(double busStations, double distance, double leaseableArea, double floor, double yoc, double contractDate, double baseRate, double x, double y, String size) {
         try {
             RConnection conn = new RConnection();
+            String rdsPath = getClass().getResource("/rds/" + size + ".rds").getPath();
 
             conn.voidEval("library(randomForest)");
-            conn.voidEval("around10_rf <- readRDS(url('classpath:/rds/" + size + ".rds','rb'))");
+            conn.voidEval("around10_rf <- readRDS('" + rdsPath +"')");
             
             conn.voidEval("result <- predict(around10_rf, list(주변정류장개수=" + busStations + ", 역거리= " + distance +
                     ", 경도 = " + y + ", 위도 = " + x + ",임대면적=" + leaseableArea + " ,층= " + floor +
