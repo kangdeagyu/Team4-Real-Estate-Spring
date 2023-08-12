@@ -34,6 +34,7 @@ public class OneSubwayController {
 
         Double shortestDistance = Double.MAX_VALUE;
         String stationName = "";
+        String line = "";
 
         double xValue = Double.parseDouble(request.getParameter("xVal"));
         double yValue = Double.parseDouble(request.getParameter("yVal"));
@@ -55,6 +56,7 @@ public class OneSubwayController {
             if (shortestDistance > distance) {
                 shortestDistance = distance;
                 stationName = subwayList.get(i).getName();
+                line = subwayList.get(i).getLine();
                 // System.out.println(distance);
             }
         }
@@ -67,6 +69,7 @@ public class OneSubwayController {
 
         resultJSON.put("distance", shortestDistance * -1000);
         resultJSON.put("station", stationName);
+        resultJSON.put("line", line);
 
         return resultJSON.toString();
     }
