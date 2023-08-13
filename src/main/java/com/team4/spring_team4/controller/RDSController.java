@@ -21,9 +21,9 @@ public class RDSController {
         @RequestParam double leaseableArea, @RequestParam double floor,
         @RequestParam double yoc, @RequestParam double contractDate,
         @RequestParam double baseRate, @RequestParam double x,
-        @RequestParam double y, @RequestParam String size) {
+        @RequestParam double y, @RequestParam String size, @RequestParam String isSale) {
         
-        String predictionResult = rService.rPredict(busStations, distance, leaseableArea, floor, yoc, contractDate, baseRate, x, y, size);
+        String predictionResult = rService.rPredict(busStations, distance, leaseableArea, floor, yoc, contractDate, baseRate, x, y, size, isSale);
         return "{\"result\":\"" + predictionResult + "\"}";
     }
 }
