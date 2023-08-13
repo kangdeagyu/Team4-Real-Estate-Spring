@@ -25,7 +25,7 @@ public class UserController {
         count = service.dupCheck(userid);
         JSONObject resultJSON = new JSONObject();
 
-        resultJSON.put("result", count);
+        resultJSON.put("result", count == 0 ? "success" : "fail");
 
         return resultJSON.toString();
     }
