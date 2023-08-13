@@ -20,7 +20,7 @@ public class UserController {
     @RequestMapping("/dupCheck")
     public String getDupCount(HttpServletRequest request) throws Exception{
 
-        int count = 0;
+        int count = 2;
         String userid = request.getParameter("userid");
         count = service.dupCheck(userid);
         JSONObject resultJSON = new JSONObject();
