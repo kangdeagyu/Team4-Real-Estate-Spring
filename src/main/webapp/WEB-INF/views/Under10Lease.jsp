@@ -17,7 +17,8 @@
 	
 	conn.voidEval("library(randomForest)");
 
-	conn.voidEval("under10_rf <- readRDS(url('http://localhost:8080/Rserve/under10.rds','rb'))");
+	//conn.voidEval("under10_rf <- readRDS(url('http://localhost:8080/Rserve/under10.rds','rb'))");
+	conn.voidEval("under10_rf <- readRDS('classpath:rds/under10.rds')");
 
 	conn.voidEval("result <- predict(under10_rf, list(주변정류장개수=" + busStations + ", 역거리= " + distance + ", 경도 = " + y + ", 위도 = " + x +
     ",임대면적=" + leaseableArea + " ,층= " + floor + ",건축년도=" + yoc + ",계약시점=" + contractDate + ",계약시점기준금리=" + baseRate + "))");
