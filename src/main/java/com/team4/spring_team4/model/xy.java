@@ -11,5 +11,6 @@ import lombok.Setter;
 public class XY {
     double x;
     double y;
+    String address;
 
 }

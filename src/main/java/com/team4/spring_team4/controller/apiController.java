@@ -12,6 +12,7 @@ import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -19,10 +20,12 @@ import jakarta.servlet.http.HttpServletRequest;
 public class ApiController {
 
     @RequestMapping("/getPrice")
+    @ResponseBody
     public String getPrice(HttpServletRequest request) throws Exception {
 
         // // 지번 데이터 받아왔을 때 글자 제거 후 뒤에 지번만 검색해야 api 이용 가능하기 때문에 불필요한 부분 제거
-        // //String address = request.getParameter("address");
+        String address = request.getParameter("address");
+        String floor = request.getParameter("floor");
         // String address = "서울특별시 강남구 역삼동 755-4";
         // System.out.println("지번 : " + address.substring(14));
 
@@ -60,17 +63,24 @@ public class ApiController {
         Element items = body.getChild("items");
         List<Element> item = items.getChildren("item");
 
+        int count = 0; // 조회된 데이터가 하나도 없는지 파악하기 위한 변수 초기화
+
         for (int i = 0; i < date.length; i++) { // 2년치 월별 검색 반복
             JSONArray apartmentMonthlyDataArray = new JSONArray(); // 월별 데이터를 담을 배열
 
             for (Element element : item) {
-                if (element.getChildText("지번").equals("755-4")) {
+                if (
+                    element.getChildText("지번").equals(address) && 
+                    element.getChildText("월세금액").equals("0") && 
+                    element.getChildText("층").equals(floor)
+                    ) {
                     JSONObject apartmentMonthlyData = new JSONObject();
                     apartmentMonthlyData.put("날짜", Integer.parseInt(date[index]));
                     apartmentMonthlyData.put("아파트명", element.getChildText("아파트"));
+                    apartmentMonthlyData.put("보증금", Integer.parseInt(element.getChildText("보증금액").replace(",", "")));
                     apartmentMonthlyData.put("층", Integer.parseInt(element.getChildText("층")));
-                    apartmentMonthlyData.put("보증금액", Integer.parseInt(element.getChildText("보증금액").replace(",", "")));
                     apartmentMonthlyDataArray.put(apartmentMonthlyData);
+                    count++;
                 }
             }
 
@@ -83,8 +93,12 @@ public class ApiController {
 
         conn.disconnect();
 
-        jsonList.put("results", apartmentDataArray); // JSONArray를 Object 형식으로 감싸기
-        System.out.println(jsonList);
+         // JSONArray를 Object 형식으로 감싸기
+        jsonList.put("results",
+            (address != null && floor != null)
+                ? (count > 0 ? apartmentDataArray : "EMPTY")
+                : "ERROR"); // 필수조건이 null일 때 ERROR, 조회된 데이터가 없을 때 EMPTY 출력
+        //System.out.println(jsonList);
 
         return jsonList.toString();
     }
