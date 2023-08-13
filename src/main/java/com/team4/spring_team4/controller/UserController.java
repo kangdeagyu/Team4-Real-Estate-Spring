@@ -21,8 +21,12 @@ public class UserController {
     public String getDupCount(HttpServletRequest request) throws Exception{
 
         int count = 2;
-        String userid = request.getParameter("userid");
-        count = service.dupCheck(userid);
+        String userid = request.getParameter("userid");        
+        if(userid == null){
+            count = 2;
+        }else{
+            count = service.dupCheck(userid);
+        }
         JSONObject resultJSON = new JSONObject();
 
         resultJSON.put("result", count == 0 ? "success" : "fail");
