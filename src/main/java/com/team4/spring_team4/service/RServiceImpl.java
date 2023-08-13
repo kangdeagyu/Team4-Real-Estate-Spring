@@ -32,7 +32,7 @@ public class RServiceImpl implements RService{
                         ",전용면적=" + leaseableArea + " ,층= " + floor + ",건축년도=" + yoc + ",계약년월=" + contractDate + ",금리=" + baseRate + "))");
                 // 3.3000 ~ 4.6000
                 String result = conn.eval("result").asString();
-                predictionResult = result + "단위(억)";
+                predictionResult = result + " 단위(억)";
             }
 
             
