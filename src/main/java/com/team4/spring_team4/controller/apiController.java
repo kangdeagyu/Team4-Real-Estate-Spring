@@ -70,9 +70,9 @@ public class ApiController {
 
             for (Element element : item) {
                 if (
-                    element.getChildText("지번").equals(address) && 
-                    element.getChildText("월세금액").equals("0") && 
-                    element.getChildText("층").equals(floor)
+                    element.getChildText("지번").equals("713-11") && 
+                    element.getChildText("월세금액").equals("0")
+                    && Integer.parseInt(element.getChildText("층")) == Integer.parseInt(floor)
                     ) {
                     JSONObject apartmentMonthlyData = new JSONObject();
                     apartmentMonthlyData.put("날짜", Integer.parseInt(date[index]));
@@ -95,10 +95,10 @@ public class ApiController {
 
          // JSONArray를 Object 형식으로 감싸기
         jsonList.put("results",
-            (address != null && floor != null)
+            (address != null /* && floor != null*/)
                 ? (count > 0 ? apartmentDataArray : "EMPTY")
                 : "ERROR"); // 필수조건이 null일 때 ERROR, 조회된 데이터가 없을 때 EMPTY 출력
-        //System.out.println(jsonList);
+        System.out.println(jsonList);
 
         return jsonList.toString();
     }
